@@ -1,0 +1,4 @@
+((author "Me")
+ (synopsis "Util")
+ (license "MIT")
+ (components (extension util) (extension util.json)))
