@@ -1,4 +1,6 @@
 ((author "Me")
  (synopsis "Util")
  (license "MIT")
- (components (extension util) (extension util.json)))
+ (components (extension util) 
+             (extension util.json) 
+             (extension util.web)))

@@ -5,7 +5,7 @@
 Install using
 
 ```
-chicken-install
+make
 ```
 
 ## Usage
