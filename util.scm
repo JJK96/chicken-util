@@ -2,7 +2,6 @@
     (import scheme
             r7rs
             (chicken module))
-    (reexport (util json) (util web))
 
     (define-syntax displayln
         (syntax-rules ()

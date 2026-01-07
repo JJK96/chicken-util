@@ -1,10 +1,14 @@
-(module (util web) (perform-request current-response)
+(module (util web) (make-request perform-request current-response)
     (import
         http-client
         (chicken io)
-        (rename intarweb (make-request intarweb:make-request))
         uri-common
-        (scheme base))
+        (scheme base)
+        (chicken module))
+    (reexport (rename intarweb (make-request intarweb:make-request) (headers intarweb:headers)))
+
+    (define (make-request uri #!rest rest #!key headers)
+        (apply intarweb:make-request uri: (uri-reference uri) headers: (intarweb:headers headers) rest))
 
     (define current-response (make-parameter '()))
     (define-syntax perform-request
@@ -14,9 +18,9 @@
                    (if (eqv? writer #f)
                        (lambda (x) '())
                        (writer))))
-                (call-with-response request writer1
-                        (lambda (resp) 
-                            (parameterize ((current-input-port (response-port resp))
+                (call-with-input-request* request writer1
+                        (lambda (port resp)
+                            (parameterize ((current-input-port port)
                                            (current-response resp)) 
                                 (reader))))))))
 )
